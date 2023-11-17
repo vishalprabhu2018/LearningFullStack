@@ -1,0 +1,24 @@
+{
+  "name": "assignment1",
+  "version": "1.0.0",
+  "description": "This is my first assignment on nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishalprabhu2018/PWassingments.git"
+  },
+  "keywords": [
+    "assignment1",
+    "firstAssignment",
+    "first"
+  ],
+  "author": "Vishal Prabhu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vishalprabhu2018/PWassingments/issues"
+  },
+  "homepage": "https://github.com/vishalprabhu2018/PWassingments#readme"
+}

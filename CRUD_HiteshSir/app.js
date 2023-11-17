@@ -2,7 +2,7 @@ const express=require('express');
 const connectToDb=require('./config/db.js');
 const cors=require('cors');
 const userRoutes=require('./routes/userRoutes.js')
-
+    
 const app=express();
 
 //Express Middleware  (appki request sai pahilai execute hota hai)(agar mai request kai sath kuch data bhi bhejna chata hu as a checkpoint hota hai)
