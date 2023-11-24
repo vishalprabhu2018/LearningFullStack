@@ -1,9 +1,10 @@
 const express=require('express');
 const router=express.Router();
-const {first,signUp, login}=require('../controllers/authController')
+const {signUp, login,getUser}=require('../controllers/authController')
+const {authenticateUser,signupDataValidate,loginDataValidate}=require('../midddleware/userAuth');
 
-router.get('/',first);
-router.post('/signup',signUp);
-router.post('/login',login);
+router.post('/signup',signupDataValidate,signUp);
+router.post('/login',loginDataValidate,login);
+router.get('/',authenticateUser,getUser)
 
 module.exports=router;

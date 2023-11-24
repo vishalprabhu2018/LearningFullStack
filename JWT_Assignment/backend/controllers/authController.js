@@ -1,19 +1,10 @@
 const emailValidator = require("email-validator");
 const userModel = require("../model/userSchema");
-const { trusted } = require("mongoose");
-const first = (req, res) => {
-  res.send("hello world");
-};
+const bcrypt=require('bcrypt');
+
 
 const signUp = async (req, res) => {
   const { name, username, email, password, bio } = req.body;
-  /// every field is required
-  if (!name || !username || !email || !password) {
-    return res.status(400).json({
-      success: false,
-      message: "Every field is required",
-    });
-  }
 
   //validate email using npm package "email-validator"
   const validEmail = emailValidator.validate(email);
@@ -56,7 +47,7 @@ const signUp = async (req, res) => {
       }
     } else {
       // Other errors
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(500).json({ error: error.message });
     }
 
   }
@@ -65,13 +56,6 @@ const signUp = async (req, res) => {
 
 const login=async (req,res)=>{
     const {username,password}=req.body;
-
-    if(!username || !password){
-      return res.status(400).json({
-        success:false,
-        message:'Every field is required'
-      })
-    }
 
     try {
       //check user exist or not
@@ -83,7 +67,7 @@ const login=async (req,res)=>{
       .select('+password')
 
 
-      if(!user || !user.password){
+      if(!user || !(await bcrypt.compare(password, user.password))){
         return res.status(400).json({
           success:false,
           message:'Invalid credentials' })
@@ -110,9 +94,25 @@ const login=async (req,res)=>{
         success:false,
         message:error.message
       })
-    }
-
-   
+    } 
 }
 
-module.exports = { first, signUp, login };
+const getUser=async (req,res)=>{
+      const userId=req.user.id;
+      try{
+        const user=await userModel.findById(userId);
+        res.status(200).json({
+          success:true,
+           data:user
+        })
+      }
+      catch(error){
+      res.status(400).json({
+        success:false,
+        message:error.message
+      })
+      }
+}
+
+
+module.exports = {  signUp, login, getUser};
