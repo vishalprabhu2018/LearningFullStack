@@ -32,7 +32,7 @@ a {
 }
 
 .loginPage,
-.form {
+#form {
     display: flex;
     flex-direction: column;
     gap: .8em;
