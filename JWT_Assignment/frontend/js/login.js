@@ -6,10 +6,15 @@ document.getElementById('form').addEventListener('submit',async function (event)
 
 const username=document.querySelector('#username').value;
 const password=document.querySelector('#password').value;
+const  p = document.getElementById('message');
 
 
-const response=await fetch('http://127.0.0.1:3000/login',{
+
+try {
+        const response=await fetch('http://127.0.0.1:3000/login',{
         method:'POST',
+        credentials: 'include',
+          redirect: 'follow',
         headers:{
                 'Content-Type':'application/json'
         },
@@ -22,6 +27,29 @@ const response=await fetch('http://127.0.0.1:3000/login',{
 const data=await response.json();
 console.log(data);
 
+
+        if(data.success==true){
+           p.innerText='User Logged In successfully'
+           window.open('../html/home.html')
+        }
+        else{
+         p.innerText= data.message;
+        }
+
+        form.reset();
+  
+      setTimeout(()=>{
+        p.innerText='';
+      },10000)
+      
+       
+      
+      
+} catch (error) {
+        p.innertext=error.message;
+        console.log(error);
+}
+  
 
 });
 }
